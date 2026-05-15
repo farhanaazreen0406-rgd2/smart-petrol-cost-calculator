@@ -25,8 +25,7 @@ public class AboutActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // 🔴 TUKAR URL DI DALAM PEMBUKA KATA "" INI KEPADA URL GITHUB AWAK YANG SEBENAR:
-                String githubUrl = "https://github.com/farhanaazreen/SmartPetrolCalculator";
-
+                String githubUrl = "https://github.com/farhanaazreen0406-rgd2/smart-petrol-cost-calculator";
                 // Intent untuk membuka web browser luar
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(githubUrl));
