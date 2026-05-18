@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private SwitchMaterial switchBudi;
     private CardView cardResult;
     private TextView tvTotalCost, tvBudiRebate, tvTotalSaving;
-    private MaterialButton btnShareResult; // DITAMBAH UNTUK LAB 6
+    private MaterialButton btnShareResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         tvTotalCost = findViewById(R.id.tvTotalCost);
         tvBudiRebate = findViewById(R.id.tvBudiRebate);
         tvTotalSaving = findViewById(R.id.tvTotalSaving);
-        btnShareResult = findViewById(R.id.btnShareResult); // DITAMBAH UNTUK LAB 6
+        btnShareResult = findViewById(R.id.btnShareResult);
 
         // Fungsi apabila butang Kira ditekan
         btnCalculate.setOnClickListener(new View.OnClickListener() {
@@ -66,13 +66,24 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("DefaultLocale")
     private void calculatePetrolCost() {
-        String priceStr = Objects.requireNonNull(etPricePerLiter.getText()).toString();
-        String usageStr = Objects.requireNonNull(etFuelUsage.getText()).toString();
+        // Ambil nilai dan buang ruang kosong (space) di hujung ayat menggunakan .trim()
+        String priceStr = Objects.requireNonNull(etPricePerLiter.getText()).toString().trim();
+        String usageStr = Objects.requireNonNull(etFuelUsage.getText()).toString().trim();
 
-        if (priceStr.isEmpty() || usageStr.isEmpty()) {
-            Toast.makeText(this, "Sila masukkan harga dan jumlah liter!", Toast.LENGTH_SHORT).show();
-            return;
+        // --- BERMULA KOD VALIDATION BARU ---
+        if (priceStr.isEmpty()) {
+            etPricePerLiter.setError("Sila masukkan Harga Seliter!");
+            etPricePerLiter.requestFocus();
+            Toast.makeText(this, "Sila masukkan harga dahulu.", Toast.LENGTH_SHORT).show();
+            return; // Hentikan pengiraan jika harga kosong
         }
+        else if (usageStr.isEmpty()) {
+            etFuelUsage.setError("Sila masukkan Jumlah Liter!");
+            etFuelUsage.requestFocus();
+            Toast.makeText(this, "Sila masukkan jumlah liter.", Toast.LENGTH_SHORT).show();
+            return; // Hentikan pengiraan jika liter kosong
+        }
+        // --- TAMAT KOD VALIDATION BARU ---
 
         double pricePerLiter = Double.parseDouble(priceStr);
         double fuelUsage = Double.parseDouble(usageStr);
@@ -96,14 +107,12 @@ public class MainActivity extends AppCompatActivity {
         cardResult.setVisibility(View.VISIBLE);
     }
 
-    // METHOD IMPLICIT INTENT UNTUK KONGSI KANDUNGAN (Rujukan: Lab Sheet 6.3)
+    // METHOD IMPLICIT INTENT UNTUK KONGSI KANDUNGAN
     private void sharePetrolResult() {
-        // Ambil data teks daripada keputusan pengiraan semasa
         String costText = tvTotalCost.getText().toString();
         String rebateText = tvBudiRebate.getText().toString();
         String savingText = tvTotalSaving.getText().toString();
 
-        // Bina teks susunan mesej yang kemas untuk dihantar
         String shareMessage = "⛽ *RINGKASAN KOS SMART PETROL CALCULATOR* ⛽\n\n" +
                 "Hai! Ini adalah hasil pengiraan kos petrol saya:\n" +
                 "• " + costText + "\n" +
@@ -111,17 +120,16 @@ public class MainActivity extends AppCompatActivity {
                 "• " + savingText + "\n\n" +
                 "Dikira menggunakan aplikasi Smart Petrol Cost Calculator. Jom semak rebat BUDI MADANI anda!";
 
-        // Eksekusi Implicit Intent untuk dihantar ke aplikasi luar
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         sendIntent.setType("text/plain");
 
-        // Memaparkan pembuka pilihan aplikasi (Chooser) secara automatik
         Intent shareIntent = Intent.createChooser(sendIntent, "Kongsi keputusan via");
         startActivity(shareIntent);
     }
 
+    // --- KOD MENU TIGA TITIK (NAVIGASI) ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

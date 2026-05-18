@@ -18,17 +18,16 @@
         app:layout_constraintBottom_toTopOf="@+id/btnGetStarted"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.4">
+        app:layout_constraintVertical_bias="0.5">
 
         <ImageView
             android:id="@+id/ivLogo"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginBottom="24dp"
-            android:contentDescription="Logo Aplikasi"
-            android:src="@drawable/gemini_generated_image_ynx20xynx20xynx2"
-            app:srcCompat="@drawable/app_logo"
-            tools:srcCompat="@drawable/app_logo" />
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_marginBottom="8dp"  android:contentDescription="Logo Aplikasi"
+            android:src="@drawable/logo1"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/app_logo" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,16 +60,16 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="40dp"
         android:text="Mula Kira Sekarang"
+        android:textAllCaps="false"
+        android:textColor="#0F172A"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textAllCaps="false"
-        app:cornerRadius="16dp"
         app:backgroundTint="#38BDF8"
-        android:textColor="#0F172A"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
