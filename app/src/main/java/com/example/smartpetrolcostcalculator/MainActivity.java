@@ -85,8 +85,19 @@ public class MainActivity extends AppCompatActivity {
         }
         // --- TAMAT KOD VALIDATION BARU ---
 
-        double pricePerLiter = Double.parseDouble(priceStr);
-        double fuelUsage = Double.parseDouble(usageStr);
+        double pricePerLiter = 0;
+        double fuelUsage = 0;
+
+        // --- TAMBAH TRY-CATCH DI SINI ---
+        // Menangkap ralat jika pengguna memasukkan "." atau format nombor yang tidak sah
+        try {
+            pricePerLiter = Double.parseDouble(priceStr);
+            fuelUsage = Double.parseDouble(usageStr);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Sila masukkan format nombor yang sah.", Toast.LENGTH_SHORT).show();
+            return; // Hentikan pengiraan supaya sistem tidak crash
+        }
+        // --------------------------------
 
         double totalPetrolCost = fuelUsage * pricePerLiter;
         double budiRebate = 0.0;
